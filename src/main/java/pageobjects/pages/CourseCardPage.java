@@ -1,16 +1,18 @@
 package pageobjects.pages;
 
+import com.google.inject.Inject;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import support.DIScoped;
 
 import java.time.LocalDate;
 
 public class CourseCardPage extends AbsBasePage<CourseCardPage> {
 
-  public CourseCardPage(WebDriver driver) {
-    super(driver);
+  @Inject
+  public CourseCardPage(DIScoped diScoped) {
+    super(diScoped);
   }
 
   public void checkCourseNameAndDescriptionData() {
