@@ -21,14 +21,14 @@ public class MainPageSteps {
 
   @Тогда("Открыть самый ранний курс и проверить дату")
   public void openEarliestCourseAndCheckDate() {
-    mainPage.choiceEarliestCourse()
-            .checkEarliestCourseDateOnPage();
+    mainPage.choiceEarliestOrLatestCourse(true)
+            .checkEarliestOrLatestCourseDateOnPage();
   }
 
   @Тогда("Открыть самый поздний курс и проверить дату")
   public void openLatestCourseAndCheckDate() {
-    mainPage.choiceLatestCourse()
-            .checkLatestCourseDateOnPage();
+    mainPage.choiceEarliestOrLatestCourse(false)
+            .checkEarliestOrLatestCourseDateOnPage();
   }
 
   @Тогда("Найти курс, стартующий не раньше даты {string}")

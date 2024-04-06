@@ -38,6 +38,6 @@ public class CourseCardPage extends AbsBasePage<CourseCardPage> {
 
   public LocalDate getCourseDate() {
     waiters.presenceOfElementLocated(By.xpath(jdivChatIconLocator));
-    return dateParser(findElem(By.xpath("//div[@class='sc-3cb1l3-4 kGoYMV']//p[substring(text(), string-length(text()) - 0) = 'я' or contains(text(),'та')]")));
+    return dateParser(findElem(By.xpath("//div[contains(@class,'kGoYMV') or contains(@class, 'sc-3cb1l3-4')]//p[substring(text(), string-length(text()) - 0) = 'я' or contains(text(),'та')]")));
   }
 }
