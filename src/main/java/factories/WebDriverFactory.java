@@ -1,14 +1,27 @@
 package factories;
 
+import com.google.inject.Inject;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import exceptions.BrowserNotSupportedException;
 import factories.impl.ChromeSettings;
 import factories.impl.FirefoxSettings;
 import factories.impl.OperaSettings;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 // реализация фабрики для выбора браузера
 public class WebDriverFactory implements IFactory<EventFiringWebDriver> {
   private String browserName = System.getProperty("browser.name").toLowerCase();
+
+  @Inject
+  public WebDriverFactory() {
+  }
+
+  public void setBrowserName(String browserName) {
+    this.browserName = browserName;
+  }
+
+  public String getBrowserName() {
+    return browserName;
+  }
 
   @Override
   public EventFiringWebDriver create() {

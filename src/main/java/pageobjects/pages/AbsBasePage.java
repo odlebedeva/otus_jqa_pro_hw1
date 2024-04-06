@@ -1,18 +1,20 @@
 package pageobjects.pages;
 
-import annotations.UrlPrefix;
+import com.google.inject.Inject;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import annotations.UrlPrefix;
 import pageobjects.utils.AbsBaseUtils;
+import support.DIScoped;
 
 public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsBaseUtils {
 
   protected final static String BASE_URL = System.getProperty("base.url");
   protected String jdivChatIconLocator = "//jdiv[@class='iconWrap_f24a']";
 
-  public AbsBasePage(WebDriver driver) {
-    super(driver);
+  @Inject
+  public AbsBasePage(DIScoped diScoped) {
+    super(diScoped);
   }
 
   public T openPage() {
@@ -27,6 +29,6 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsBaseUtils
 
   private String getUrlPrefix() {
     UrlPrefix urlAnnotation = getClass().getAnnotation(UrlPrefix.class);
-    return urlAnnotation.value();
+    return urlAnnotation.value().endsWith("/") ? urlAnnotation.value() : urlAnnotation.value() + "/";
   }
 }

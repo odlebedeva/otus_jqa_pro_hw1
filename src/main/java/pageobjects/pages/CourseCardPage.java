@@ -1,16 +1,18 @@
 package pageobjects.pages;
 
+import com.google.inject.Inject;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import support.DIScoped;
 
 import java.time.LocalDate;
 
 public class CourseCardPage extends AbsBasePage<CourseCardPage> {
 
-  public CourseCardPage(WebDriver driver) {
-    super(driver);
+  @Inject
+  public CourseCardPage(DIScoped diScoped) {
+    super(diScoped);
   }
 
   public void checkCourseNameAndDescriptionData() {
@@ -36,6 +38,6 @@ public class CourseCardPage extends AbsBasePage<CourseCardPage> {
 
   public LocalDate getCourseDate() {
     waiters.presenceOfElementLocated(By.xpath(jdivChatIconLocator));
-    return dateParser(findElem(By.xpath("//div[@class='sc-3cb1l3-4 kGoYMV']//p[substring(text(), string-length(text()) - 0) = 'я' or contains(text(),'та')]")));
+    return dateParser(findElem(By.xpath("//div[contains(@class,'kGoYMV') or contains(@class, 'sc-3cb1l3-4')]//p[substring(text(), string-length(text()) - 0) = 'я' or contains(text(),'та')]")));
   }
 }
