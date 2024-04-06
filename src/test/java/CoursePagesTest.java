@@ -18,26 +18,25 @@ public class CoursePagesTest {
   public void choiceCourseByNameTest() {
     new MainPage(driver)
             .openPage()
-            .filterAndOpenCourseByName("Специализация QA Automation Engineer");
+            .filterAndOpenCourseByName("Специализация Системный аналитик");
     new CourseCardPage(driver)
             .checkCourseNameAndDescriptionData();
   }
 
   @Test
   @Description("Выбор курса, стартующего раньше всех")
-  public void choiceEarliestCourseAndCheckDateTest() {
+  public void choiceCourseAndCheckDate1Test() {
     new MainPage(driver)
-            .openPage()
-            .choiceEarliestCourse()
-            .checkEarliestCourseDateOnPage();
+      .openPage()
+      .choiceEarliestOrLatestCourse(true)
+      .checkEarliestOrLatestCourseDateOnPage();
   }
-
   @Test
   @Description("Выбор курса, стартующего позже всех")
-  public void choiceLatestCourseAndCheckDateTest() {
+  public void choiceCourseAndCheckDate2Test() {
     new MainPage(driver)
-            .openPage()
-            .choiceLatestCourse()
-            .checkLatestCourseDateOnPage();
+      .openPage()
+      .choiceEarliestOrLatestCourse(false)
+      .checkEarliestOrLatestCourseDateOnPage();
   }
 }
