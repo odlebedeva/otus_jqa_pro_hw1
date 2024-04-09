@@ -15,6 +15,11 @@ public class OperaSettings implements IBrowserSettings {
     operaOptions.addArguments("--homepage=about:blank");
     operaOptions.addArguments("--ignore-certificate-errors");
     operaOptions.addArguments("--start-maximized");
+    operaOptions.addArguments("--lang=ru");
+    operaOptions.addArguments("--no-sandbox");
+    operaOptions.addArguments("--remote-allow-origins=*");
+    operaOptions.addArguments("--no-first-run");
+    operaOptions.addArguments("--enable-extensions");
 
     WebDriverManager.operadriver().browserVersion(this.browserVersion).setup();
 

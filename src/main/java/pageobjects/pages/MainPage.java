@@ -14,6 +14,7 @@ import java.util.*;
 public class MainPage extends AbsBasePage<MainPage> {
   private LocalDate earliestCourseDate;
   private LocalDate latestCourseDate;
+  private LocalDate earliestOrLatestCourseDate;
 
   public MainPage(WebDriver driver) {
     super(driver);
@@ -46,68 +47,53 @@ public class MainPage extends AbsBasePage<MainPage> {
     }
   }
 
-  public MainPage choiceEarliestCourse() {
+  public MainPage choiceEarliestOrLatestCourse(boolean choiceCourseDate) {
     Map<WebElement, LocalDate> tilesDateMap = this.getSectionElementsWithLocalDate();
+    Map<WebElement, LocalDate> earlistOrLatestCourseMap = new HashMap<>();
+    if (choiceCourseDate) {
+      // если true, то выбираем самый ранний курс
+      Optional<Map.Entry<WebElement, LocalDate>> courseEntry = tilesDateMap.entrySet().stream()
+          .reduce((entry1, entry2) -> entry1.getValue().isBefore(entry2.getValue()) ? entry1 : entry2);
 
-    Optional<Map.Entry<WebElement, LocalDate>> earliestEntry = tilesDateMap.entrySet().stream()
-            .reduce((entry1, entry2) -> entry1.getValue().isBefore(entry2.getValue()) ? entry1 : entry2);
+      earlistOrLatestCourseMap = courseEntry.map(entry -> {
+        Map<WebElement, LocalDate> mapWithLatestDate = new HashMap<>();
+        mapWithLatestDate.put(entry.getKey(), entry.getValue());
+        return mapWithLatestDate;
+      }).orElseGet(HashMap::new);
 
-    Map<WebElement, LocalDate> earlistCourseMap = earliestEntry.map(entry -> {
-      Map<WebElement, LocalDate> mapWithLatestDate = new HashMap<>();
-      mapWithLatestDate.put(entry.getKey(), entry.getValue());
-      return mapWithLatestDate;
-    }).orElseGet(HashMap::new);
+      this.earliestOrLatestCourseDate = earlistOrLatestCourseMap.values().iterator().next();
+      log.info(String.format("Курс, стартующий раньше всех, начинается %s", this.earliestOrLatestCourseDate));
 
-    this.earliestCourseDate = earlistCourseMap.values().iterator().next();
-    log.info(String.format("Курс, стартующий раньше всех, начинается %s", this.earliestCourseDate));
+    } else {
+      Optional<Map.Entry<WebElement, LocalDate>> courseEntry = tilesDateMap.entrySet().stream()
+          .reduce((entry1, entry2) -> entry1.getValue().isAfter(entry2.getValue()) ? entry1 : entry2);
 
+      earlistOrLatestCourseMap = courseEntry.map(entry -> {
+        Map<WebElement, LocalDate> mapWithLatestDate = new HashMap<>();
+        mapWithLatestDate.put(entry.getKey(), entry.getValue());
+        return mapWithLatestDate;
+      }).orElseGet(HashMap::new);
+
+      this.earliestOrLatestCourseDate = earlistOrLatestCourseMap.values().iterator().next();
+      log.info(String.format("Курс, стартующий позже всех, начинается %s", this.earliestOrLatestCourseDate));
+    }
     try {
-      moveAndClick(earlistCourseMap.keySet().iterator().next());
+      moveAndClick(earlistOrLatestCourseMap.keySet().iterator().next());
     } catch (ElementClickInterceptedException e) {
       closeCookiesMessage();
-      moveAndClick(earlistCourseMap.keySet().iterator().next());
+      moveAndClick(earlistOrLatestCourseMap.keySet().iterator().next());
     }
-
     return this;
   }
 
-  public MainPage choiceLatestCourse() {
-    Map<WebElement, LocalDate> tilesDateMap = this.getSectionElementsWithLocalDate();
-
-    Optional<Map.Entry<WebElement, LocalDate>> latestEntry = tilesDateMap.entrySet().stream()
-            .reduce((entry1, entry2) -> entry1.getValue().isAfter(entry2.getValue()) ? entry1 : entry2);
-
-    Map<WebElement, LocalDate> latestCourseMap = latestEntry.map(entry -> {
-      Map<WebElement, LocalDate> mapWithLatestDate = new HashMap<>();
-      mapWithLatestDate.put(entry.getKey(), entry.getValue());
-      return mapWithLatestDate;
-    }).orElseGet(HashMap::new);
-
-    this.latestCourseDate = latestCourseMap.values().iterator().next();
-    log.info(String.format("Курс, стартующий позже всех, начинается %s", this.latestCourseDate));
-
-    try {
-      moveAndClick(latestCourseMap.keySet().iterator().next());
-    } catch (ElementClickInterceptedException e) {
-      closeCookiesMessage();
-      moveAndClick(latestCourseMap.keySet().iterator().next());
-    }
-
-    return this;
-  }
-
-  public void checkEarliestCourseDateOnPage() {
-    Assertions.assertEquals(this.earliestCourseDate, new CourseCardPage(driver).getCourseDate());
-  }
-
-  public void checkLatestCourseDateOnPage() {
-    Assertions.assertEquals(this.latestCourseDate, new CourseCardPage(driver).getCourseDate());
+  public void checkEarliestOrLatestCourseDateOnPage() {
+    Assertions.assertEquals(this.earliestOrLatestCourseDate, new CourseCardPage(driver).getCourseDate());
   }
 
   private Map<WebElement, LocalDate> getSectionElementsWithLocalDate() {
 
     // Блоки курсов на главной странице
-    String firstTypeBlockLocator = "//span[@class='sc-1pljn7g-3 cdTYKW' and contains(text(), 'С ')]";
+    String firstTypeBlockLocator = "//span[contains(text(), 'С ')]";
     String secondTypeBlockLocator  = ".sc-12yergf-7.dPBnbE";
 
     waiters.presenceOfElementLocated(By.xpath(jdivChatIconLocator));
@@ -119,7 +105,6 @@ public class MainPage extends AbsBasePage<MainPage> {
       LocalDate date = dateParser(element);
       blockDateMap.put(element, date);
     }
-
     return blockDateMap;
   }
 }
