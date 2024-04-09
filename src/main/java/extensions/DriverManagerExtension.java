@@ -23,11 +23,12 @@ import java.util.stream.Collectors;
 
 public class DriverManagerExtension implements BeforeEachCallback, AfterEachCallback {
   private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-  private String driverType = System.getProperty("driver.type");
+  //  private String driverType = System.getProperty("driver.type");
 
   @Override
   public void beforeEach(ExtensionContext extensionContext) throws IllegalAccessException, MalformedURLException {
-    if (Objects.equals(this.driverType, "remote")) {
+    if (Boolean.parseBoolean(System.getProperty("selenoid.enabled", "false"))) {
+      // Objects.equals(this.driverType, "remote")
       DesiredCapabilities capabilities = new DesiredCapabilities();
       String browserName = System.getProperty("browser.name").toLowerCase();
       String browserVersion = System.getProperty("browser.version");
@@ -35,6 +36,7 @@ public class DriverManagerExtension implements BeforeEachCallback, AfterEachCall
       capabilities.setCapability(CapabilityType.BROWSER_NAME, browserName);
       capabilities.setCapability(CapabilityType.BROWSER_VERSION, browserVersion);
       capabilities.setCapability("enableVNC", true);
+      capabilities.setCapability("enableVideo", true);
 
       WebDriver remoteDriver = new RemoteWebDriver(URI.create(System.getProperty("remote.url")).toURL(), capabilities);
       driver.set(new EventFiringWebDriver(remoteDriver).register(new WebDriverListener()));
@@ -64,7 +66,7 @@ public class DriverManagerExtension implements BeforeEachCallback, AfterEachCall
   private List<Field> getAnnotatedFields(Class<? extends Annotation> annotation, ExtensionContext extensionContext) {
     Class<?> testClass = extensionContext.getTestClass().get();
     return Arrays.stream(testClass.getDeclaredFields())
-            .filter(field -> field.isAnnotationPresent(annotation))
-            .collect(Collectors.toList());
+      .filter(field -> field.isAnnotationPresent(annotation))
+      .collect(Collectors.toList());
   }
 }

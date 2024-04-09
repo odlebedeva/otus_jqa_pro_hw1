@@ -19,6 +19,8 @@
     <log4j-core.version>2.17.1</log4j-core.version>
     <log4j-slf4j2-impl.version>2.20.0</log4j-slf4j2-impl.version>
     <jsoup.version>1.16.2</jsoup.version>
+    <aspectj.version>1.9.5</aspectj.version>
+    <allure.version>2.13.2</allure.version>
 
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
@@ -28,8 +30,12 @@
 
     <browser.name>chrome</browser.name>
     <browser.version>123.0</browser.version>
-    <base.url>https://otus.ru</base.url>
-    <remote.url>http://127.0.0.1/wd/hub</remote.url>
+    <base.url>gi</base.url>
+    <remote.url>http://127.0.0.1/wd/hub/</remote.url>
+    <selenoid.enabled>true</selenoid.enabled>
+
+    <implicitlyWaitTimeout>20</implicitlyWaitTimeout>
+    <pageloadtimeout>30</pageloadtimeout>
 
   </properties>
 
@@ -65,12 +71,12 @@
       <artifactId>jsoup</artifactId>
       <version>${jsoup.version}</version>
     </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>compile</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>junit</groupId>-->
+<!--      <artifactId>junit</artifactId>-->
+<!--      <version>4.12</version>-->
+<!--      <scope>compile</scope>-->
+<!--    </dependency>-->
   </dependencies>
 
   <build>
@@ -96,13 +102,28 @@
               junit.jupiter.execution.parallel.mode.default = concurrent
             </configurationParameters>
           </properties>
-          <systemProperties>
+          <systemPropertyVariables>
             <browser.name>${browser.name}</browser.name>
             <browser.version>${browser.version}</browser.version>
             <base.url>${base.url}</base.url>
             <remote.url>${remote.url}</remote.url>
-          </systemProperties>
+            <selenoid.enabled>${selenoid.enabled}</selenoid.enabled>
+            <implicitlyWaitTimeout>${implicitlyWaitTimeout}</implicitlyWaitTimeout>
+            <pageloadtimeout>${pageloadtimeout}</pageloadtimeout>
+          </systemPropertyVariables>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -133,6 +154,15 @@
             <version>${spotbugs.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.10.0</version>
+        <configuration>
+          <reportVersion>${allure.version}</reportVersion>
+          <allureDownloadUrl>https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.version}/allure-commandline-${allure.version}.zip</allureDownloadUrl>
+        </configuration>
       </plugin>
     </plugins>
   </build>
