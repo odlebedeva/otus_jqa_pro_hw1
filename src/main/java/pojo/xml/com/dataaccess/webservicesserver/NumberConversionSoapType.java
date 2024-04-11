@@ -39,7 +39,7 @@ public interface NumberConversionSoapType {
   @ResponseWrapper(localName = "NumberToDollarsResponse", targetNamespace = "http://www.dataaccess.com/webservicesserver/", className = "com.dataaccess.webservicesserver.NumberToDollarsResponse")
   @WebResult(name = "NumberToDollarsResult", targetNamespace = "http://www.dataaccess.com/webservicesserver/")
   public String numberToDollars(
-      @WebParam(name = "dNum", targetNamespace = "http://www.dataaccess.com/webservicesserver/")
-      java.math.BigDecimal dNum
+      @WebParam(name = "dnum", targetNamespace = "http://www.dataaccess.com/webservicesserver/")
+      java.math.BigDecimal dnum
   );
 }

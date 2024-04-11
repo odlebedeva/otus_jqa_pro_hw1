@@ -41,7 +41,7 @@ public class SOAPTest extends TestNGCitrusSpringSupport {
 
   public NumberToDollars getNumberToDollarsRequest() {
     NumberToDollars numberToDollars = new NumberToDollars();
-    numberToDollars.setdNum(new BigDecimal("99087"));
+    numberToDollars.setdnum(new BigDecimal("99087"));
     return numberToDollars;
   }
 

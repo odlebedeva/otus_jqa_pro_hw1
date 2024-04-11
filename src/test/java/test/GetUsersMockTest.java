@@ -8,6 +8,7 @@ import behaviors.ResponseMock;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.context.TestContext;
 import com.consol.citrus.testng.TestNGCitrusSupport;
+import org.junit.jupiter.api.Order;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
 
@@ -31,7 +32,7 @@ public class GetUsersMockTest extends TestNGCitrusSupport {
             .validate(jsonPath()
                     .expression("$[1].name", "Olga")
                     .expression("$[1].age", "@isNumber()@")
-                    .expression("$[0].email", "@matches('^\\s+@\\s+\\.\\s+$')@")
+                    .expression("$[0].email", "@matches('^\\S+@\\S+\\.\\S+$')@")
                     .expression("$[0].course", "QA"))
     );
   }

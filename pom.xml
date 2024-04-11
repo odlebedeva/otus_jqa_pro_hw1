@@ -176,12 +176,12 @@
               cucumber.execution.parallel.config.strategy=dynamic
             </configurationParameters>
           </properties>
-          <systemProperties>
+          <systemPropertyVariables>
             <browser.name>${browser.name}</browser.name>
             <browser.version>${browser.version}</browser.version>
             <base.url>${base.url}</base.url>
             <remote.url>${remote.url}</remote.url>
-          </systemProperties>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
       <!-- линтер -->

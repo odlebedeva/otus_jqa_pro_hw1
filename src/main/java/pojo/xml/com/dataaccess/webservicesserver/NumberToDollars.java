@@ -8,16 +8,16 @@ import java.math.BigDecimal;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "dNum" })
+@XmlType(name = "", propOrder = { "dnum" })
 @XmlRootElement(name = "NumberToDollars")
 public class NumberToDollars {
   @XmlElement(required = true)
-  protected BigDecimal dNum;
+  protected BigDecimal dnum;
 
-  public BigDecimal getdNum() {
-    return dNum;
+  public BigDecimal getdnum() {
+    return dnum;
   }
-  public void setdNum(BigDecimal value) {
-    this.dNum = value;
+  public void setdnum(BigDecimal value) {
+    this.dnum = value;
   }
 }
