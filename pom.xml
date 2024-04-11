@@ -13,7 +13,6 @@
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <junit.version>5.10.0</junit.version>
     <webdrivermanager.version>5.6.0</webdrivermanager.version>
     <selenium-java.version>3.141.59</selenium-java.version>
     <log4j-core.version>2.17.1</log4j-core.version>
@@ -28,55 +27,33 @@
     <spotbugs.version>4.8.3</spotbugs.version>
     <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
 
-    <browser.name>chrome</browser.name>
-    <browser.version>123.0</browser.version>
-    <base.url>gi</base.url>
-    <remote.url>http://127.0.0.1/wd/hub/</remote.url>
-    <selenoid.enabled>true</selenoid.enabled>
-
-    <implicitlyWaitTimeout>20</implicitlyWaitTimeout>
-    <pageloadtimeout>30</pageloadtimeout>
+    <selenide.version>7.2.3</selenide.version>
+    <junit.version>5.10.0</junit.version>
+    <guice.version>7.0.0</guice.version>
 
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>selenide</artifactId>
+      <version>${selenide.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>selenide-appium</artifactId>
+      <version>${selenide.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>${junit.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.github.bonigarcia</groupId>
-      <artifactId>webdrivermanager</artifactId>
-      <version>${webdrivermanager.version}</version>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>${selenium-java.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>${log4j-core.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j2-impl</artifactId>
-      <version>${log4j-slf4j2-impl.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <version>${jsoup.version}</version>
-    </dependency>
-<!--    <dependency>-->
-<!--      <groupId>junit</groupId>-->
-<!--      <artifactId>junit</artifactId>-->
-<!--      <version>4.12</version>-->
-<!--      <scope>compile</scope>-->
-<!--    </dependency>-->
   </dependencies>
 
   <build>
@@ -96,34 +73,25 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
-          <properties>
-            <configurationParameters>
-              junit.jupiter.execution.parallel.enabled = true
-              junit.jupiter.execution.parallel.mode.default = concurrent
-            </configurationParameters>
-          </properties>
+          <failIfNoTests>false</failIfNoTests>
+          <workingDirectory>${project.build.directory}</workingDirectory>
+          <systemProperties>
+            <property>
+              <name>junit.jupiter.extensions.autodetection.enabled</name>
+              <value>true</value>
+            </property>
+          </systemProperties>
           <systemPropertyVariables>
-            <browser.name>${browser.name}</browser.name>
-            <browser.version>${browser.version}</browser.version>
-            <base.url>${base.url}</base.url>
-            <remote.url>${remote.url}</remote.url>
-            <selenoid.enabled>${selenoid.enabled}</selenoid.enabled>
-            <implicitlyWaitTimeout>${implicitlyWaitTimeout}</implicitlyWaitTimeout>
-            <pageloadtimeout>${pageloadtimeout}</pageloadtimeout>
+            <remote.url>http://0.0.0.0:4723/wd/hub</remote.url>
+            <platform.name>Android</platform.name>
+            <device.name>emulator-5554</device.name>
+            <platfrom.version>14.0</platfrom.version>
+            <avd.name>small_android_8.1</avd.name>
+            <app.package>com.pyankoff.andy</app.package>
+            <app.activity>.MainActivity</app.activity>
+            <apk.path>/home/ubuntu/Andy.apk</apk.path>
           </systemPropertyVariables>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
