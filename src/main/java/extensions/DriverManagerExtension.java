@@ -36,7 +36,7 @@ public class DriverManagerExtension implements BeforeEachCallback, AfterEachCall
       capabilities.setCapability(CapabilityType.BROWSER_NAME, browserName);
       capabilities.setCapability(CapabilityType.BROWSER_VERSION, browserVersion);
       capabilities.setCapability("enableVNC", true);
-      capabilities.setCapability("enableVideo", true);
+      //capabilities.setCapability("enableVideo", true);
 
       WebDriver remoteDriver = new RemoteWebDriver(URI.create(System.getProperty("remote.url")).toURL(), capabilities);
       driver.set(new EventFiringWebDriver(remoteDriver).register(new WebDriverListener()));
