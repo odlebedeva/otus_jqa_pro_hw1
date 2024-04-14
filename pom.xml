@@ -31,6 +31,15 @@
     <junit.version>5.10.0</junit.version>
     <guice.version>7.0.0</guice.version>
 
+    <user.dir>D:/LocalData/otus/otus_practice_1/otus_jqa_pro_hw1</user.dir>
+    <remote.url>http://127.0.0.1:4723/wd/hub</remote.url>
+    <platform.name>Android</platform.name>
+    <device.name>emulator-5554</device.name>
+    <platform.version>8.1</platform.version>
+    <avd.name>Medium_Phone_API_27</avd.name>
+    <app.package>com.pyankoff.andy</app.package>
+    <app.activity>.MainActivity</app.activity>
+    <apk.path>D:/LocalData/otus/otus_practice_1/otus_jqa_pro_hw1/src/main/resources/Andy.apk</apk.path>
   </properties>
 
   <dependencies>
@@ -82,14 +91,14 @@
             </property>
           </systemProperties>
           <systemPropertyVariables>
-            <remote.url>http://0.0.0.0:4723/wd/hub</remote.url>
-            <platform.name>Android</platform.name>
-            <device.name>emulator-5554</device.name>
-            <platfrom.version>14.0</platfrom.version>
-            <avd.name>small_android_8.1</avd.name>
-            <app.package>com.pyankoff.andy</app.package>
-            <app.activity>.MainActivity</app.activity>
-            <apk.path>/home/ubuntu/Andy.apk</apk.path>
+            <remote.url>${remote.url}</remote.url>
+            <platform.name>${platform.name}</platform.name>
+            <device.name>${device.name}</device.name>
+            <platform.version>${platform.version}</platform.version>
+            <avd.name>${avd.name}</avd.name>
+            <app.package>${app.package}</app.package>
+            <app.activity>${app.activity}</app.activity>
+            <apk.path>${apk.path}</apk.path>
           </systemPropertyVariables>
         </configuration>
       </plugin>

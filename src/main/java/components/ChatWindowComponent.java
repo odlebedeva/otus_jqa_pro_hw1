@@ -1,15 +1,6 @@
 package components;
 
 import annotations.Component;
-import com.codeborne.selenide.Condition;
-import org.w3c.dom.html.HTMLInputElement;
-import pageobjects.pages.AbsBasePage;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
-
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 
 
 @Component("id:chat")

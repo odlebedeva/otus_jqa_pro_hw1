@@ -8,6 +8,6 @@ public abstract class AbsBasePage<T> {
     // обертка для алюровских степов
     Selenide.open();
 
-    return (T)this;
+    return (T) this;
   }
 }

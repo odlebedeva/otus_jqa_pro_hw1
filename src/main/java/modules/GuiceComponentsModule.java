@@ -7,16 +7,16 @@ import components.ChatWindowComponent;
 
 public class GuiceComponentsModule extends AbstractModule {
 
-    @Provides
-    @Singleton
-    public ChatWindowComponent getChatWindowComponent() {
-        return new ChatWindowComponent();
-    }
+  @Provides
+  @Singleton
+  public ChatWindowComponent getChatWindowComponent() {
+    return new ChatWindowComponent();
+  }
 
-//    @Provides
-//    @Singleton
-//    public MainMenuComponent getMainMenuComponent() {
-//        return new MainMenuComponent();
-//    }
+  //    @Provides
+  //    @Singleton
+  //    public MainMenuComponent getMainMenuComponent() {
+  //        return new MainMenuComponent();
+  //    }
 
 }
