@@ -12,9 +12,11 @@ import java.util.regex.Pattern;
 public abstract class AbsBaseComponent<T> {
 
   {
+    // влюбом компоненте вложенный поиск и статическая иницализация
     getComponentEntity().shouldBe(Condition.visible);
   }
 
+  // анализатор
   private By locatorAnalyzer(String value) {
     Pattern pattern = Pattern.compile("(\\w+):(\\w+)");
     Matcher matcher = pattern.matcher(value);
@@ -27,7 +29,6 @@ public abstract class AbsBaseComponent<T> {
           return By.cssSelector(matcher.group(2));
       }
     }
-
     return null;
   }
 
@@ -36,14 +37,10 @@ public abstract class AbsBaseComponent<T> {
     if (clazz.isAnnotationPresent(Component.class)) {
       Component component = (Component) clazz.getAnnotation(Component.class);
       By by = locatorAnalyzer(component.value());
-
       assert by != null : "Search strategy not supported";
-
       return $(by);
     }
     // метод полезен для вложенного поиска на странице
-
     return null;
   }
-
 }

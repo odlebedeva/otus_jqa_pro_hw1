@@ -31,15 +31,15 @@
     <junit.version>5.10.0</junit.version>
     <guice.version>7.0.0</guice.version>
 
-    <user.dir>D:/LocalData/otus/otus_practice_1/otus_jqa_pro_hw1</user.dir>
-    <remote.url>http://127.0.0.1:4723/wd/hub</remote.url>
-    <platform.name>Android</platform.name>
+    <remote.url>http://localhost:4723/wd/hub</remote.url>
+    <platform.name>android</platform.name>
     <device.name>emulator-5554</device.name>
     <platform.version>8.1</platform.version>
     <avd.name>Medium_Phone_API_27</avd.name>
     <app.package>com.pyankoff.andy</app.package>
     <app.activity>.MainActivity</app.activity>
     <apk.path>D:/LocalData/otus/otus_practice_1/otus_jqa_pro_hw1/src/main/resources/Andy.apk</apk.path>
+
   </properties>
 
   <dependencies>
