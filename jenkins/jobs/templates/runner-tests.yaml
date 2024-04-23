@@ -13,6 +13,7 @@
       - text:
           name: YAML_CONFIG
           default: |
+            BASE_URL: https://otus.ru
             BROWSER_NAME: chrome
             BROWSER_VERSION: 123.0
             REMOTE_URL: http://127.0.0.1/
@@ -20,10 +21,9 @@
             TEST_TYPES:
               - ui
               - api
-              - mock
               - mobile
       - string:
-          name: REFSPEC
+          name: BRANCH
           default: main
           description: Branch for tests
     pipeline-scm:

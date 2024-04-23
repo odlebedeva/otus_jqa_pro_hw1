@@ -15,22 +15,24 @@ timeout(60) {
                 }
             }
             //получение списка типов теста
-            testType = env.getProperty('TEST_TYPES').split(",\\s*")
+            testTypes = env.getProperty("TEST_TYPES").replace("[", "").replace("]", "").split(",\\s*") //["ui", "mobile", "api"]
         }
 
         def jobs = [:]
-
         //объекты джоб
         try {
-            testType.each { type ->
+            for(type in testTypes) {
                 jobs[type] = {
-                    stage("Running $type") {
-                        build(job: "$type", parameters: [
-                                text(name: 'YAML_CONFIG', value: env.YAML_CONFIG)
-                        ])
+                    node("maven") {
+                        stage("Running $type tests") {
+                            build(job: "$type-tests", parameters: [
+                                    text(name: "YAML_CONFIG", value: env.YAML_CONFIG)
+                            ])
+                        }
                     }
                 }
             }
+
             parallel jobs
 
         } finally {
