@@ -13,12 +13,13 @@
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <junit.version>5.10.0</junit.version>
     <webdrivermanager.version>5.6.0</webdrivermanager.version>
     <selenium-java.version>3.141.59</selenium-java.version>
     <log4j-core.version>2.17.1</log4j-core.version>
     <log4j-slf4j2-impl.version>2.20.0</log4j-slf4j2-impl.version>
     <jsoup.version>1.16.2</jsoup.version>
+    <aspectj.version>1.9.5</aspectj.version>
+    <allure.version>2.13.2</allure.version>
 
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
@@ -26,50 +27,68 @@
     <spotbugs.version>4.8.3</spotbugs.version>
     <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
 
-    <browser.name>chrome</browser.name>
-    <browser.version>121.0</browser.version>
-    <base.url>https://otus.ru</base.url>
-    <remote.url>http://127.0.0.1/wd/hub</remote.url>
+    <selenide.version>7.2.3</selenide.version>
+    <junit.version>5.10.0</junit.version>
+    <guice.version>7.0.0</guice.version>
+    <allure.selenide>2.24.0</allure.selenide>
+
+    <remote.url>http://localhost:4723/wd/hub</remote.url>
+    <platform.name>android</platform.name>
+    <device.name>emulator-5554</device.name>
+    <platform.version>8.1</platform.version>
+    <avd.name>Medium_Phone_API_27</avd.name>
+    <app.package>com.pyankoff.andy</app.package>
+    <app.activity>.MainActivity</app.activity>
+    <apk.path>D:/LocalData/otus/otus_practice_1/otus_jqa_pro_hw1/src/main/resources/Andy.apk</apk.path>
 
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>selenide</artifactId>
+      <version>${selenide.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>selenide-appium</artifactId>
+      <version>${selenide.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>${junit.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.github.bonigarcia</groupId>
-      <artifactId>webdrivermanager</artifactId>
-      <version>${webdrivermanager.version}</version>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>${selenium-java.version}</version>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>RELEASE</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>${log4j-core.version}</version>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-selenide</artifactId>
+      <version>${allure.selenide}</version>
     </dependency>
+
     <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j2-impl</artifactId>
-      <version>${log4j-slf4j2-impl.version}</version>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-bom</artifactId>
+      <version>${allure.selenide}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-junit5</artifactId>
+      <version>${allure.selenide}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <version>${jsoup.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
 
@@ -90,18 +109,26 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
-          <properties>
-            <configurationParameters>
-              junit.jupiter.execution.parallel.enabled = true
-              junit.jupiter.execution.parallel.mode.default = concurrent
-            </configurationParameters>
-          </properties>
+          <failIfNoTests>false</failIfNoTests>
+          <workingDirectory>${project.build.directory}</workingDirectory>
           <systemProperties>
-            <browser.name>${browser.name}</browser.name>
-            <browser.version>${browser.version}</browser.version>
-            <base.url>${base.url}</base.url>
-            <remote.url>${remote.url}</remote.url>
+            <property>
+              <name>junit.jupiter.extensions.autodetection.enabled</name>
+              <value>true</value>
+            </property>
           </systemProperties>
+          <systemPropertyVariables>
+            <remote.url>${remote.url}</remote.url>
+            <platform.name>${platform.name}</platform.name>
+            <device.name>${device.name}</device.name>
+            <platform.version>${platform.version}</platform.version>
+            <avd.name>${avd.name}</avd.name>
+            <app.package>${app.package}</app.package>
+            <app.activity>${app.activity}</app.activity>
+            <apk.path>${apk.path}</apk.path>
+
+            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
       <plugin>
@@ -133,6 +160,17 @@
             <version>${spotbugs.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <!-- Плагин нужен только для локального запуска отчета в IDE-->
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.10.0</version><!--2.13.2-->
+        <configuration>
+          <reportVersion>${allure.version}</reportVersion>
+          <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+          <allureDownloadUrl>https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.version}/allure-commandline-${allure.version}.zip</allureDownloadUrl>
+        </configuration>
       </plugin>
     </plugins>
   </build>
