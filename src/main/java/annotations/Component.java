@@ -7,11 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-// метаданные в рантайме
 public @interface Component {
-
-  // прокидываем локаторы аннотации через него
   String value();
-  // почему стринг, а не селенид элемент:
-  // метаданные создаются раньше, чем происходит создание класса и вызов статич конфигрурата
+  // почему стринг, а не selenideElement:
+  // через эту аннотацию прокидываем наш компонент
 }

@@ -30,6 +30,7 @@
     <selenide.version>7.2.3</selenide.version>
     <junit.version>5.10.0</junit.version>
     <guice.version>7.0.0</guice.version>
+    <allure.selenide>2.24.0</allure.selenide>
 
     <remote.url>http://localhost:4723/wd/hub</remote.url>
     <platform.name>android</platform.name>
@@ -62,6 +63,32 @@
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
       <version>${guice.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>RELEASE</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-selenide</artifactId>
+      <version>${allure.selenide}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-bom</artifactId>
+      <version>${allure.selenide}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-junit5</artifactId>
+      <version>${allure.selenide}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -99,6 +126,8 @@
             <app.package>${app.package}</app.package>
             <app.activity>${app.activity}</app.activity>
             <apk.path>${apk.path}</apk.path>
+
+            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
           </systemPropertyVariables>
         </configuration>
       </plugin>
@@ -132,12 +161,14 @@
           </dependency>
         </dependencies>
       </plugin>
+      <!-- Плагин нужен только для локального запуска отчета в IDE-->
       <plugin>
         <groupId>io.qameta.allure</groupId>
         <artifactId>allure-maven</artifactId>
-        <version>2.10.0</version>
+        <version>2.10.0</version><!--2.13.2-->
         <configuration>
           <reportVersion>${allure.version}</reportVersion>
+          <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
           <allureDownloadUrl>https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.version}/allure-commandline-${allure.version}.zip</allureDownloadUrl>
         </configuration>
       </plugin>

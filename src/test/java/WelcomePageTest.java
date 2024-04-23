@@ -10,17 +10,15 @@ import pages.WelcomePage;
 
 @Execution(ExecutionMode.CONCURRENT)
 @ExtendWith(AndroidExtension.class)
-public class ChatTest {
+public class WelcomePageTest {
 
   @Inject
   WelcomePage welcomePage = new GuicePagesModule().getWelcomePage();
 
   @Test
-  @DisplayName("Чат с ботом")
-  public void checkChatIsWorking() {
-    welcomePage.goToMainPage()
-      .sendMessage("Hi, chat-bot")
-      .checkStatement("I will speak English now. I hope it’s okay, we learn English here after all")
-      .sendMessage("okay");
+  @DisplayName("Проверка начальных слайдов")
+  public void navigationMainPageWidget() {
+    welcomePage.goToMainPage();
   }
+
 }
