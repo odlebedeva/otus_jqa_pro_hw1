@@ -1,5 +1,5 @@
 timeout(60) {
-    node("maven-slave") {
+    node("maven") {
         wrap([$class: 'BuildUser']) {
             currentBuild.description = """
                 User : $BUILD_USER
