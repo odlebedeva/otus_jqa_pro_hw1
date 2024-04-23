@@ -24,9 +24,9 @@
               - mobile
       - string:
           name: BRANCH
-          default: main
-          description: Branch for tests
+          default: homework_6
+          description: "Branch"
     pipeline-scm:
       scm:
         - git-runner
-      script-path: jenkins2/jobs/scripts/runner-tests.groovy
+      script-path: jenkins/runner-tests.groovy
