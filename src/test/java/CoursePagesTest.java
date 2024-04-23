@@ -1,6 +1,6 @@
 import annotations.Driver;
 import extensions.DriverManagerExtension;
-import jdk.jfr.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +14,7 @@ public class CoursePagesTest {
   private WebDriver driver;
 
   @Test
-  @Description("Фильтр по названию курса")
+  @DisplayName("Фильтр по названию курса")
   public void choiceCourseByNameTest() {
     new MainPage(driver)
             .openPage()
@@ -24,7 +24,7 @@ public class CoursePagesTest {
   }
 
   @Test
-  @Description("Выбор курса, стартующего раньше всех")
+  @DisplayName("Выбор курса, стартующего раньше всех")
   public void choiceCourseAndCheckDate1Test() {
     new MainPage(driver)
       .openPage()
@@ -32,7 +32,7 @@ public class CoursePagesTest {
       .checkEarliestOrLatestCourseDateOnPage();
   }
   @Test
-  @Description("Выбор курса, стартующего позже всех")
+  @DisplayName("Выбор курса, стартующего позже всех")
   public void choiceCourseAndCheckDate2Test() {
     new MainPage(driver)
       .openPage()
