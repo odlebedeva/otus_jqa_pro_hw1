@@ -1,0 +1,5 @@
+- project:
+    name: 'autotests'
+    job-description: '<h4 style="color:#999696;">Deploy Jenkins jobs</h4>'
+    jobs:
+      - 'runner-tests'

@@ -1,0 +1,9 @@
+- scm:
+    name: git-ui-tests
+    scm:
+      - git:
+          url: git@github.com:odlebedeva/otus_jqa_pro_hw1.git
+          credentials-id: jenkins
+          branches:
+            - FETCH_HEAD
+          refspec: ${BRANCH}
